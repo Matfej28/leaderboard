@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package leaderboard;
+
+option go_package = ".";
+
+service Leaderboard{
+    rpc Registration(RegistrationRequest) returns (RegistrationResponse){}
+    rpc LogIn(LogInRequest) returns (LogInResponse){}
+    rpc Find(stream RankRequest) returns (stream RankResponse){}
+    rpc GetLeaderboard(LeaderboardRequest) returns (LeaderboardResponse){}
+}
+
+message RegistrationRequest{
+    string username = 1;
+    string email = 2;
+    string password = 3;
+    string confirmPassword = 4;
+}
+
+message RegistrationResponse{
+    string token = 1;
+}
+
+message LogInRequest{
+    string username = 1;
+    string password = 2;
+}
+
+message LogInResponse{
+    string token = 1;
+}
+
+message RankRequest{
+    string name = 1;
+    uint32 score = 2;
+}
+
+message RankResponse{
+    uint32 rank = 1;
+}
+
+message LeaderboardRequest{
+    optional string name = 1;
+    uint32 page = 2;
+    bool monthly = 3; // if false => all time
+    uint32 resAmount = 4; 
+}
+
+message LeaderboardResponse{
+    repeated Player results = 1;
+    repeated Player around_me = 2;
+    uint32 next_page = 3;
+}
+
+message Player{
+    string name = 1;
+    uint32 score = 2;
+    uint32 rank = 3;
+}

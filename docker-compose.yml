@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  db:
+    container_name: db-container
+    build: 
+      context: .
+      dockerfile: db.Dockerfile
+    networks:
+      - default
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_RANDOM_ROOT_PASSWORD: "${MYSQL_RANDOM_ROOT_PASSWORD}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_HOST: "${MYSQL_HOST}"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  api:
+    container_name: api-container
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db  
+
+networks:
+  default:
+volumes:
+  mysql_data:
+    
+
+  
+
+    
