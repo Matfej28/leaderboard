@@ -241,6 +241,7 @@ func (s *LeaderboardServer) Find(stream pb.Leaderboard_FindServer) error {
 	if err != nil {
 		return err
 	}
+	//
 
 	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", os.Getenv("MYSQL_USER"), os.Getenv("MYSQL_PASSWORD"), os.Getenv("MYSQL_HOST"), os.Getenv("MYSQL_PORT"), os.Getenv("MYSQL_DATABASE")))
 	defer db.Close()
@@ -288,10 +289,12 @@ func (s *LeaderboardServer) GetLeaderboard(ctx context.Context, in *pb.Leaderboa
 
 	// Token
 	jwtKey := os.Getenv("AUTH_KEY")
+
 	err = checkToken(jwtKey, ctx)
 	if err != nil {
 		return &pb.LeaderboardResponse{}, err
 	}
+	//
 
 	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", os.Getenv("MYSQL_USER"), os.Getenv("MYSQL_PASSWORD"), os.Getenv("MYSQL_HOST"), os.Getenv("MYSQL_PORT"), os.Getenv("MYSQL_DATABASE")))
 	defer db.Close()
