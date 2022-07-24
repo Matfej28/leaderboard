@@ -12,4 +12,4 @@
  ```bash
  docker compose up
   ```
-Wait until everything is loaded, then open the API testing platform (like Postman) and test the API. To provide your token, add Metadata named "token" and insert your token there.
+Wait until everything is loaded, then open the API testing platform (like Postman) and test the API. To provide your token, add Metadata with the key "token" and insert your token there as a value.
