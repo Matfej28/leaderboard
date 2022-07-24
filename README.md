@@ -8,7 +8,7 @@
  ```bash
  git clone https://github.com/Matfej28/leaderboard
   ```
- Open downloaded directory and compose the file:
+ Open downloaded directory, open the Docker and compose the file:
  ```bash
  docker compose up
   ```
