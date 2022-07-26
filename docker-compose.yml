@@ -5,7 +5,7 @@ services:
     container_name: db-container
     build: 
       context: .
-      dockerfile: db.Dockerfile
+      dockerfile: dockerfiles/db.Dockerfile
     networks:
       - default
     ports:
@@ -23,7 +23,7 @@ services:
     container_name: api-container
     build:
       context: .
-      dockerfile: api.Dockerfile
+      dockerfile: dockerfiles/api.Dockerfile
     ports:
       - "8080:8080"
     depends_on:
