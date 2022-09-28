@@ -271,7 +271,7 @@ func (s *LeaderboardServer) Find(stream pb.Leaderboard_FindServer) error {
 		name = req.GetName()
 		score = req.GetScore()
 
-		rank, err := leaderboardDB.Insert(db, name, score)
+		rank, err := leaderboardDB.GetRank(db, name, score)
 
 		if err := stream.Send(&pb.RankResponse{Rank: rank}); err != nil {
 			return err

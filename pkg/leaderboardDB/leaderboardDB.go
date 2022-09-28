@@ -55,10 +55,10 @@ func calculateRank(db *sql.DB, name string, score uint32) uint32 {
 	return newRank
 }
 
-// Insert inserts the player with given name and score into the db and returns players' rank in the leaderboard. If the given score is not larger than the
-// players' best score, Insert just returns the rank of the player. If the given score is the new best score, Insert updates the score in the db and returns
+// GetRank inserts the player with given name and score into the db and returns players' rank in the leaderboard. If the given score is not larger than the
+// players' best score, GetRank just returns the rank of the player. If the given score is the new best score, GetRank updates the score in the db and returns
 // the new rank of the player.
-func Insert(db *sql.DB, name string, score uint32) (rank uint32, globErr error) {
+func GetRank(db *sql.DB, name string, score uint32) (rank uint32, globErr error) {
 	if name == "" {
 		globErr = errors.New("invalid name, write at least 1 character")
 		return
@@ -85,7 +85,7 @@ func Insert(db *sql.DB, name string, score uint32) (rank uint32, globErr error) 
 			if err != nil {
 				log.Fatal(err)
 			}
-			recalc(db)
+			recalculateLeaderboard(db)
 		} else {
 			return r, nil
 		}
@@ -245,8 +245,8 @@ func Fetch(db *sql.DB, name string, page uint32, monthly bool, resAmount uint32)
 	return
 }
 
-// recalc recalculates the rank of every player in db.
-func recalc(db *sql.DB) {
+// recalculateLeaderboard recalculates the rank of every player in db.
+func recalculateLeaderboard(db *sql.DB) {
 	var counter uint32
 
 	rows, err := db.Query("SELECT `name`, `score`, `rank` FROM `leaderboard` ORDER BY `Rank`;")
